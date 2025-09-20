@@ -1,0 +1,131 @@
+#################################################
+# Build Artifacts - C / C++
+#################################################
+# Object files
+*.o
+*.obj
+
+# Linker output
+*.so
+*.dylib
+*.dll
+*.exe
+*.out
+*.a
+*.lib
+
+# Debug files
+*.gch
+*.pch
+
+# Build directories
+bin/
+build/
+dist/
+Debug/
+Release/
+
+#################################################
+# Java
+#################################################
+*.class
+*.jar
+*.war
+*.ear
+*.iml
+
+# Java build systems
+.gradle/
+build/
+target/
+out/
+
+# Logs
+*.log
+
+#################################################
+# Python
+#################################################
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+.venv/
+ENV/
+env/
+venv.bak/
+venv-backup/
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+*.hypothesis/
+
+#################################################
+# Emacs
+#################################################
+# Emacs backup files
+*~
+\#*\#
+.\#*
+
+# Emacs auto-save / lock files
+*.elc
+auto-save-list/
+tramp
+
+# Projectile
+.projectile
+
+#################################################
+# Linux & System files
+#################################################
+# Common system files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Temporary files
+*.swp
+*.swo
+*.tmp
+
+# Linux trash folder
+.Trash-*
