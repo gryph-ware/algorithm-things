@@ -1,2 +1,2 @@
 # algorithm-things
-just algorithm with multi language
+just algorithm with multi languages
