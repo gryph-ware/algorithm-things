@@ -23,6 +23,16 @@ typedef struct HashMap{
   Node **table;
 }HashMap;
 
+/*=================djb2 hash function==========*/
+unsigned long hash(char *str, int capacity){
+  unsigned long index = 5381;
+  int c;
+  while((c = *str++)){
+    index = ((index << 5) + index) + c;
+  }
+  return index % capacity;
+}
+
 /*===============replacement function=============*/
 char *customDup(char *str){
   if(str == NULL){
@@ -50,18 +60,45 @@ Node *createNode(char *str, int data){
   new->next = NULL;
   return new;
 }
+/*===============resize entire hashmap=============*/
+int primes[] = {199, 431, 1237, 3011, 10007, 20021, 40009, 60013, 80021, 90001, 99991};
+int size = sizeof(primes) / sizeof(primes[0]);
 
-/*===============hashmap's function=============*/
-unsigned long hash(char *str, int capacity){
-  unsigned long index = 5381;
-  int c;
-  while((c = *str++)){
-    index = ((index << 5) + index) + c;
+int nextSize(int current){
+  for(int i = 0; i < size; i++){
+    if(current < primes[i]){
+      return primes[i];
+    }
   }
-  return index % capacity;
+  return (primes[size - 1] * 2) + 1;
 }
 
+void reSize(HashMap *map){
+  int old_capacity = map->capacity;
+  int newSize = nextSize(old_capacity);
+
+  Node **newTable = calloc(newSize, sizeof(Node*));
+  
+  for(int i = 0; i < old_capacity; i++){
+    Node *entry = map->table[i];
+    while(entry){
+      Node *next = entry->next;
+      unsigned long index = hash(entry->str_key, newSize);
+      entry->next = newTable[index];
+      newTable[index] = entry;
+      entry = next;
+    }
+  }
+  free(map->table);
+  map->table = newTable;
+  map->capacity = newSize;
+}
+
+/*===============hashmap's function=============*/
 void insertNode(HashMap *map, char *str, int data){
+  if((float) (map->size + 1) / (map->capacity) >= LOAD_FACTOR){
+    reSize(map);
+  }
   unsigned long index = hash(str, map->capacity);
   Node *entry = map->table[index];
   while(entry){
@@ -89,6 +126,10 @@ int lookUpData(HashMap *map, char *str){
   }
   return 0;
 }
+
+/* void displayMap(HashMap *map){ */
+/*   for(int i = 0; i < map->capacity */
+/* } */
 
 void deleteNode(HashMap *map, char *str){
   unsigned long index = hash(str, map->capacity);
@@ -128,13 +169,14 @@ void deleteMap(HashMap *map){
 int main(){
 
   HashMap *myMap = createMap();
-  insertNode(myMap, "chanh", 10);
+  //insertNode(myMap, "chanh", 10);
   //deleteNode(myMap, "chanh");
 
-  int data = lookUpData(myMap, "chanh");
+  //int data = lookUpData(myMap, "chanh");
 
-  printf("%d", data);
+  //  printf("%d", data);
   
   deleteMap(myMap);
+  
   return EXIT_SUCCESS;
 }
