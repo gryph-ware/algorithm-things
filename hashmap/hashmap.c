@@ -127,9 +127,16 @@ int lookUpData(HashMap *map, char *str){
   return 0;
 }
 
-/* void displayMap(HashMap *map){ */
-/*   for(int i = 0; i < map->capacity */
-/* } */
+void displayMap(HashMap *map){
+  for(int i = 0; i < map->capacity; i++){
+    Node *entry = map->table[i];
+    while(entry){
+      printf("%s, %d, %d->", entry->str_key, entry->data, entry->freq);
+      entry = entry->next;
+    }
+    printf("null->\n");
+  }
+}
 
 void deleteNode(HashMap *map, char *str){
   unsigned long index = hash(str, map->capacity);
@@ -169,12 +176,15 @@ void deleteMap(HashMap *map){
 int main(){
 
   HashMap *myMap = createMap();
-  //insertNode(myMap, "chanh", 10);
-  //deleteNode(myMap, "chanh");
+  insertNode(myMap, "chanh", 10);
+  
+  displayMap(myMap);
+  
+  printf("%d\n", lookUpData(myMap, "chanh"));
+	 
+  deleteNode(myMap, "chanh");
 
-  //int data = lookUpData(myMap, "chanh");
-
-  //  printf("%d", data);
+  displayMap(myMap);
   
   deleteMap(myMap);
   
